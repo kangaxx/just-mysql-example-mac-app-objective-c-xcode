@@ -21,15 +21,17 @@
 {
     // Insert code here to initialize your application
     
-    NSString *dbName = @"ensembl_production_72";
+
+    
+    NSString *dbName = @"java_test";
     
     MySQLKitDatabase* server = [[MySQLKitDatabase alloc] init];
     // db.socket = @"/tmp/mysql/mysql.sock";
-    server.serverName = @"useastdb.ensembl.org";
-    server.dbName = @"";
-    server.userName = @"anonymous";
-    server.password = @"";
-    server.port = 3306;
+    server.serverName = @"47.96.27.126";
+    server.dbName = @"java_test";
+    server.userName = @"manage";
+    server.password = @"corpize@201%bat";
+    server.port = 8888;
     @try{
         [server connect];
         
@@ -40,6 +42,22 @@
         for(int i = 0; i < len; i++){
             NSString *currentDbName = [query stringValFromRow:i Column:0];
             NSLog(@"Database: %@", currentDbName);
+            NSString *dbName = [NSString stringWithFormat:@"database : %@",currentDbName];
+            NSAlert *alert = [[NSAlert alloc] init];
+
+            [alert setInformativeText:dbName];
+            [alert setAlertStyle:NSAlertStyleInformational];
+            [alert beginSheetModalForWindow:[self window ] completionHandler:^(NSModalResponse returnCode) {
+                if(returnCode == NSAlertFirstButtonReturn)
+                {
+                    
+                }
+                if(returnCode == NSAlertSecondButtonReturn)
+                {
+                    ;//第二个按钮被按下后执行
+                }
+                
+            }];
         }
         
         MySQLKitQuery *query2 = [[MySQLKitQuery alloc] initWithDatabase:server];
@@ -61,37 +79,37 @@
     }
     
     
-    MySQLKitDatabase* db = [[MySQLKitDatabase alloc] init];
-    // db.socket = @"/tmp/mysql/mysql.sock";
-    db.serverName = @"useastdb.ensembl.org";
-    db.dbName = dbName;
-    db.userName = @"anonymous";
-    db.password = @"";
-    db.port = 3306;
-    @try{
-        [db connect];
-        
-        MySQLKitQuery *query3 = [[MySQLKitQuery alloc] initWithDatabase:db];
-        NSString *selectSql = [NSString stringWithFormat:@"select * from `%@` limit 10", @"species"];
-        NSLog(@"Querying: `%@`", selectSql);
-        query3.sql = selectSql;
-        [query3 execQuery];
-        NSInteger len = query3.recordCount;
-        NSLog(@"Number of records in species: %ld", (long)len);
-        for(int i = 0; i < len; i++){
-            NSInteger col0 = [query3 integerValFromRow:i Column:0];
-            NSString *col1 = [query3 stringValFromRow:i Column:1];
-            NSLog(@"Entry: %ld\t%@", (long)col0,col1);
-        }
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Exception: %@", exception);
-        NSLog(@"ERROR! Message: %@", [db errorMessage]);
-        [db alertIfError];
-    }
-    @finally {
-        [db disconnect];
-    }
+//    MySQLKitDatabase* db = [[MySQLKitDatabase alloc] init];
+//    // db.socket = @"/tmp/mysql/mysql.sock";
+//    db.serverName = @"47.96.27.126";
+//    db.dbName = dbName;
+//    db.userName = @"manage";
+//    db.password = @"corpize@201%bat";
+//    db.port = 8888;
+//    @try{
+//        [db connect];
+//        
+//        MySQLKitQuery *query3 = [[MySQLKitQuery alloc] initWithDatabase:db];
+//        NSString *selectSql = [NSString stringWithFormat:@"select * from `%@` limit 10", @"sensitive_words"];
+//        NSLog(@"Querying: `%@`", selectSql);
+//        query3.sql = selectSql;
+//        [query3 execQuery];
+//        NSInteger len = query3.recordCount;
+//        NSLog(@"Number of records in species: %ld", (long)len);
+//        for(int i = 0; i < len; i++){
+//            NSInteger col0 = [query3 integerValFromRow:i Column:0];
+//            NSString *col1 = [query3 stringValFromRow:i Column:1];
+//            NSLog(@"Entry: %ld\t%@", (long)col0,col1);
+//        }
+//    }
+//    @catch (NSException *exception) {
+//        NSLog(@"Exception: %@", exception);
+//        NSLog(@"ERROR! Message: %@", [db errorMessage]);
+//        [db alertIfError];
+//    }
+//    @finally {
+//        [db disconnect];
+//    }
     
 
 }
